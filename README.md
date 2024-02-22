@@ -1,6 +1,6 @@
 ## IN PROGRESS...
 
-## Falling sand simulator game based on cellular automatas
+## Falling sand simulator game based on cellular automata
 
 Simulate the behavior of particles using cellular automata in this Python-based sand simulator.
 
