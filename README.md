@@ -1,5 +1,13 @@
 ## IN PROGRESS...
 
+##Implemented
+-> Sand particles
+
+## Future Implementations:
+-> Water particles
+-> Lava 
+-> Vapor (Created by the interaction between water and lava)
+
 ## Falling sand simulator game based on cellular automata
 
 Simulate the behavior of particles using cellular automata in this Python-based sand simulator.
