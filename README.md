@@ -15,7 +15,7 @@ A cellular automaton (CA) is a discrete mathematical model that consists of a gr
 
 The grid, often represented as a lattice, can be one-dimensional, two-dimensional, or even higher-dimensional. Each cell interacts with its neighbors according to the specified rules, and these interactions lead to the evolution of the entire system over time.
 
-![image](https://github.com/jgcastr0/sand_simulator_game/assets/160870260/344ff6e2-60da-48f7-ae29-f3f37eee9e1b)
+![Conway's Game of Life](https://github.com/jgcastr0/sand_simulator_game/assets/160870260/344ff6e2-60da-48f7-ae29-f3f37eee9e1b)
 
 
 Cellular automata are used in various fields, including computer science, physics, biology, and artificial life. They were first introduced by mathematician John von Neumann and later popularized by cellular automaton pioneer Stephen Wolfram. Cellular automata can exhibit complex and unpredictable behavior, and they have been used to study emergent phenomena and simulate diverse processes in different scientific and computational contexts. Wolfram's Rule 30 is a famous example of a one-dimensional cellular automaton that produces complex and seemingly random patterns from simple rules.
