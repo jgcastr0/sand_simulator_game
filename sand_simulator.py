@@ -1,18 +1,24 @@
 import pygame
 import numpy as np
 from random import choice
+import time
+
 
 # Initializing Pygame
 pygame.init()
 
+start_time = time.time()
+elapsed_time = 0
+
 # Screen settings
-particle_size = 5 # Change this value to play with the particles size
+particle_size = 10 # Change this value to play with the particles size
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
 # Colors
 background = (0, 0, 0)
 sand = (197, 175, 128)
+text_color = (255, 255, 255)
 
 # Clock object to control FPS rate
 clock = pygame.time.Clock()
@@ -73,6 +79,12 @@ class TheGrid:
                 self.sand_positions.append([x - particle_size, y + particle_size])
 
 
+def display_text(text):
+    font = pygame.font.Font(None, 27)
+    text1 = font.render(text, True, text_color)
+    text_rect = text1.get_rect(center=(width // 2, 50))
+    screen.blit(text1, text_rect)
+
 universe = TheGrid()
 
 # Main loop
@@ -81,7 +93,7 @@ while True:
     xm, ym = pygame.mouse.get_pos()
 
     # Shows some informations
-    pygame.display.set_caption(f"Sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions)}  |  Mouse posx: [{xm}] Mouse posy: [{ym}]")
+    pygame.display.set_caption(f"Sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions)}  |  Mouse posX: [{xm}] Mouse posY: [{ym}]")
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -97,6 +109,11 @@ while True:
 
     # Fill the screen with a color
     screen.fill(background)
+
+    # Shows instructions
+    if elapsed_time < 5:
+        display_text("Press the left mouse button to add particles")
+        elapsed_time = time.time() - start_time
 
     # Updates Particle Positions
     universe.update_particles_positions()
