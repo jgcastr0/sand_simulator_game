@@ -1,5 +1,4 @@
 import pygame
-import sys
 import numpy as np
 
 # Initializing Pygame
@@ -36,7 +35,6 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()
 
     # Fill the screen with a color
     screen.fill(background_color)
