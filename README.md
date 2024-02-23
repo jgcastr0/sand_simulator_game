@@ -1,12 +1,12 @@
 ## IN PROGRESS...
 
-##Implemented
+##Implemented  
 -> Sand particles
 
-## Future Implementations:
--> Water particles
--> Lava 
--> Vapor (Created by the interaction between water and lava)
+## Future Implementations:  
+-> Water particles  
+-> Lava   
+-> Vapor (Created by the interaction between water and lava)  
 
 ## Falling sand simulator game based on cellular automata
 
