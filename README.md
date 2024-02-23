@@ -1,13 +1,5 @@
 ## IN PROGRESS...
 
-## Implemented    
--> Sand particles
-
-## Future Implementations:  
--> Water particles  
--> Lava   
--> Vapor (Created by the interaction between water and lava)  
-
 ## Falling sand simulator game based on cellular automata
 
 Simulate the behavior of particles using cellular automata in this Python-based sand simulator.
@@ -15,7 +7,15 @@ Simulate the behavior of particles using cellular automata in this Python-based 
 ## Description
 
 This project implements a sand simulation where particles obey simple rules inspired by cellular automata.
-Sand particles fall under the influence of gravity, and their movement is governed by rules that determine their behavior when interacting with other particles.
+Sand particles fall under the influence of gravity, and their movement is governed by rules that determine their behavior when interacting with other particles.  
+
+## Implemented    
+-> Sand particles
+
+## Future Implementations:  
+-> Water particles  
+-> Lava   
+-> Vapor (Created by the interaction between water and lava)  
 
 ## What is a cellular automata?
 
