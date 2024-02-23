@@ -1,6 +1,6 @@
 ## IN PROGRESS...
 
-##Implemented  
+## Implemented    
 -> Sand particles
 
 ## Future Implementations:  
