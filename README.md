@@ -23,7 +23,7 @@ A cellular automaton (CA) is a discrete mathematical model that consists of a gr
 
 The grid, often represented as a lattice, can be one-dimensional, two-dimensional, or even higher-dimensional. Each cell interacts with its neighbors according to the specified rules, and these interactions lead to the evolution of the entire system over time.
 
-# Conway's Game of Life  
+### Conway's Game of Life  
 ![Conway's Game of Life](https://mathworld.wolfram.com/images/gifs/puffertr.gif)
 
 
