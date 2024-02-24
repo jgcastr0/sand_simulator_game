@@ -12,7 +12,7 @@ start_time = time()
 elapsed_time = 0
 
 # Screen settings
-particle_size = 10 # Change this value to play with the particles size
+particle_size = 10  # Change this value to play with the particles size
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
@@ -87,49 +87,50 @@ class TheGrid:
         screen.blit(text1, text_rect)
 
 
-    def main(start_time, elapsed_time):
 
-        # Main loop
-        while True:
+def main(start_time, elapsed_time):
 
-            xm, ym = pygame.mouse.get_pos()
+    # Main loop
+    while True:
 
-            # Shows some informations
-            pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions)}  |  Mouse posX: [{xm}]  Mouse posY: [{ym}]")
+        xm, ym = pygame.mouse.get_pos()
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                
-                mouse_buttons = pygame.mouse.get_pressed()
-                
-                if mouse_buttons[0]:
-                    pos = pygame.mouse.get_pos()
-                    universe.sand(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
-                    
+        # Shows some informations
+        pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions)}  |  Mouse posX: [{xm}]  Mouse posY: [{ym}]")
 
-            # Fill the screen with a color
-            screen.fill(BACKGROUND_COLOR)
-
-            # Shows instructions
-            if elapsed_time < 5:
-                TheGrid.display_text("Press the left mouse button to add particles")
-                elapsed_time = time() - start_time
-
-            # Updates Particle Positions
-            universe.update_particles_positions()
-
-            # Draws the particles
-            universe.create(screen)
-
-            # Updates the display
-            pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
             
-            # FPS rate
-            clock.tick(120) 
+            mouse_buttons = pygame.mouse.get_pressed()
+            
+            if mouse_buttons[0]:
+                pos = pygame.mouse.get_pos()
+                universe.sand(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
+                
+
+        # Fill the screen with a color
+        screen.fill(BACKGROUND_COLOR)
+
+        # Shows instructions
+        if elapsed_time < 5:
+            TheGrid.display_text("Press the left mouse button to add particles")
+            elapsed_time = time() - start_time
+
+        # Updates Particle Positions
+        universe.update_particles_positions()
+
+        # Draws the particles
+        universe.create(screen)
+
+        # Updates the display
+        pygame.display.flip()
+        
+        # FPS rate
+        clock.tick(120) 
 
 
 if __name__ == '__main__':
     universe = TheGrid()
     while True:
-        TheGrid.main(start_time, elapsed_time)
+        main(start_time, elapsed_time)
