@@ -12,7 +12,7 @@ start_time = time()
 elapsed_time = 0
 
 # Screen settings
-particle_size = 10  # Change this value to play with the particles size
+particle_size = 7  # Change this value to play with the particles size
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
@@ -20,6 +20,7 @@ screen = pygame.display.set_mode((width, height))
 BACKGROUND_COLOR:tuple = (0, 0, 0)
 SAND_COLOR:tuple = (197, 175, 128)
 WATER_COLOR:tuple = (77, 200, 253)
+WALL_COLOR:tuple = (155, 155, 155)
 TEXT_COLOR:tuple = (255, 255, 255)
 
 # Clock object to control FPS rate
@@ -31,6 +32,7 @@ class TheGrid:
         self.grid = np.zeros((int(width / particle_size), int(height / particle_size)))    # Creates the grid based on the particle size
         self.sand_positions = [] # particles positions
         self.water_positions = []
+        self.wall_positions = []
 
 
     def sand(self, mouseX, mouseY): # Adds sand particles
@@ -51,12 +53,24 @@ class TheGrid:
                 self.water_positions.append([gridX * particle_size, gridY * particle_size])
 
 
+    def wall(self, mouseX, mouseY): # Adds sand particles
+        gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
+
+        if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
+            if self.grid[gridX][gridY] == 0:
+                self.grid[gridX][gridY] = 3
+                self.wall_positions.append([gridX * particle_size, gridY * particle_size])
+
+
     def create(self, screen):    # Draws the particles
         for particles in self.sand_positions:
             pygame.draw.rect(screen, SAND_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
         
         for particles in self.water_positions:
             pygame.draw.rect(screen, WATER_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
+
+        for particles in self.wall_positions:
+            pygame.draw.rect(screen, WALL_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
 
 
     def update_sand_positions(self): # Updates the position of sand particles
@@ -152,6 +166,10 @@ def main(start_time, elapsed_time):
             if mouse_buttons[2]:
                 pos = pygame.mouse.get_pos()
                 universe.water(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
+
+            if mouse_buttons[1]:
+                pos = pygame.mouse.get_pos()
+                universe.wall(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
                 
 
         # Fill the screen with a color
