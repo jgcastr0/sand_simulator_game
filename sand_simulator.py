@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from random import choice
+from random import choice, randint
 from time import time
 
 
@@ -12,7 +12,7 @@ start_time = time()
 elapsed_time = 0
 
 # Screen settings
-particle_size = 7  # Change this value to play with the particles size
+particle_size = 5  # Change this value to play with the particles size
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
@@ -53,7 +53,7 @@ class TheGrid:
                 self.water_positions.append([gridX * particle_size, gridY * particle_size])
 
 
-    def wall(self, mouseX, mouseY): # Adds sand particles
+    def wall(self, mouseX, mouseY): # Adds a solid wall particle particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
 
         if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
@@ -78,30 +78,33 @@ class TheGrid:
             x, y = particle
             gridX, gridY = int(x / particle_size), int(y / particle_size)
             
-            # Checks if it can move downwards
-            if gridY < self.grid.shape[1] - 1 and self.grid[gridX][gridY + 1] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX][gridY + 1] = 1
-                particle[:] = [x, y + particle_size]
+            # Checks the screen limits
+            if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1] - 1:
+               
+                # Checks if it can move downwards
+                if self.grid[gridX][gridY + 1] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX][gridY + 1] = 1
+                    particle[:] = [x, y + particle_size]
 
-            # Checks if both lower diagonals are free and chooses one to slide down
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY + 1] == 0 and self.grid[gridX - 1][gridY + 1] == 0:
-                direction = choice([1, -1])
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX + direction][gridY + 1] = 1
-                particle[:] = [x + (particle_size * direction), y + particle_size]
+                # Checks if both lower diagonals are free and chooses one to slide down
+                elif gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY + 1] == 0 and self.grid[gridX - 1][gridY + 1] == 0:
+                    direction = choice([1, -1])
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX + direction][gridY + 1] = 1
+                    particle[:] = [x + (particle_size * direction), y + particle_size]
 
-            # Checks if the lower right diagonal is free and slides down to it    
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY + 1] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX + 1][gridY + 1] = 1
-                particle[:] = [x + particle_size, y + particle_size]
-            
-            # Checks if the lower left diagonal is free and slides down to it    
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX -1][gridY + 1] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX - 1][gridY + 1] = 1
-                particle[:] = [x - particle_size, y + particle_size]
+                # Checks if the lower right diagonal is free and slides down to it    
+                elif gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY + 1] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX + 1][gridY + 1] = 1
+                    particle[:] = [x + particle_size, y + particle_size]
+                
+                # Checks if the lower left diagonal is free and slides down to it    
+                elif self.grid[gridX - 1][gridY + 1] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX - 1][gridY + 1] = 1
+                    particle[:] = [x - particle_size, y + particle_size]
 
 
     def update_water_positions(self): # Updates the position of water particles
@@ -109,36 +112,39 @@ class TheGrid:
             x, y = particle
             gridX, gridY = int(x / particle_size), int(y / particle_size)
             
-            # Checks if it can move downwards
-            if gridY < self.grid.shape[1] - 1 and self.grid[gridX][gridY + 1] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX][gridY + 1] = 2
-                particle[:] = [x, y + particle_size]
-            
-            #Checks if the water can move to both sides
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY] == 0 and self.grid[gridX - 1][gridY] == 0:
-                direction = choice([1, -1])
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX + direction][gridY] = 2
-                particle[:] = [x + (direction * particle_size), y]
-            
-            # Checks if the water can move to the right
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX + 1][gridY] = 2
-                particle[:] = [x + particle_size, y]
+            # Checks the screen limits
+            if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
+                
+                # Checks if it can move downwards
+                if gridY < self.grid.shape[1] - 1 and self.grid[gridX][gridY + 1] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX][gridY + 1] = 2
+                    particle[:] = [x, y + particle_size]
+                
+                #Checks if the water can move to both sides
+                elif gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY] == 0 and self.grid[gridX - 1][gridY] == 0:
+                    direction = choice([1, -1])
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX + direction][gridY] = 2
+                    particle[:] = [x + (direction * particle_size), y]
+                
+                # Checks if the water can move to the right
+                elif gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX + 1][gridY] = 2
+                    particle[:] = [x + particle_size, y]
 
-            #Checks if the water can move to the left
-            elif gridY < self.grid.shape[1] - 1 and gridX > 0 and gridX < self.grid.shape[0] - 1 and self.grid[gridX - 1][gridY] == 0:
-                self.grid[gridX][gridY] = 0
-                self.grid[gridX - 1][gridY] = 2
-                particle[:] = [x - particle_size, y]
+                #Checks if the water can move to the left
+                elif self.grid[gridX - 1][gridY] == 0:
+                    self.grid[gridX][gridY] = 0
+                    self.grid[gridX - 1][gridY] = 2
+                    particle[:] = [x - particle_size, y]
 
 
     def display_text(text): # Shows instrutions on screen
         font = pygame.font.Font(None, 27)
         text1 = font.render(text, True, TEXT_COLOR)
-        text_rect = text1.get_rect(center = (width // 2, 50))
+        text_rect = text1.get_rect(center = (width // 2, 15))
         screen.blit(text1, text_rect)
 
 
@@ -156,18 +162,19 @@ def main(start_time, elapsed_time):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            
-            mouse_buttons = pygame.mouse.get_pressed()
-            
-            if mouse_buttons[0]:
+
+            #mouse_buttons = pygame.mouse.get_pressed()
+            key = pygame.key.get_pressed()
+
+            if key[pygame.K_1]:
                 pos = pygame.mouse.get_pos()
                 universe.sand(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
             
-            if mouse_buttons[2]:
+            if key[pygame.K_2]:
                 pos = pygame.mouse.get_pos()
                 universe.water(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
 
-            if mouse_buttons[1]:
+            if key[pygame.K_3]:
                 pos = pygame.mouse.get_pos()
                 universe.wall(pos[0] - pos[0] % particle_size, pos[1] - pos[1] % particle_size)
                 
@@ -176,8 +183,8 @@ def main(start_time, elapsed_time):
         screen.fill(BACKGROUND_COLOR)
 
         # Shows instructions
-        if elapsed_time < 5:
-            TheGrid.display_text("Press the left mouse button to add particles")
+        if elapsed_time < 10:
+            TheGrid.display_text("Particles options:     1 = Sand    2 = Water   3 = Wall")
             elapsed_time = time() - start_time
 
         # Updates Particle Positions
@@ -191,7 +198,7 @@ def main(start_time, elapsed_time):
         pygame.display.flip()
         
         # FPS rate
-        clock.tick(60) 
+        clock.tick(120) 
 
 
 if __name__ == '__main__':
