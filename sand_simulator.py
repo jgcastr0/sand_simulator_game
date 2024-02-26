@@ -17,10 +17,10 @@ width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
 # Colors
-BACKGROUND_COLOR = tuple((0, 0, 0))
-SAND_COLOR = tuple((197, 175, 128))
-WATER_COLOR = tuple((77, 200, 253))
-TEXT_COLOR = tuple((255, 255, 255))
+BACKGROUND_COLOR:tuple = (0, 0, 0)
+SAND_COLOR:tuple = (197, 175, 128)
+WATER_COLOR:tuple = (77, 200, 253)
+TEXT_COLOR:tuple = (255, 255, 255)
 
 # Clock object to control FPS rate
 clock = pygame.time.Clock()
