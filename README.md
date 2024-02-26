@@ -9,16 +9,6 @@ Simulate the behavior of particles using cellular automata in this Python-based 
 This project implements a sand simulation where particles obey simple rules inspired by cellular automata.
 Sand particles fall under the influence of gravity, and their movement is governed by rules that determine their behavior when interacting with other particles.  
 
-## Implemented:       
-
--> Sand particles  
-
-## Future Implementations:  
-
--> Water    
--> Lava   
--> Vapor (Created by the interaction between water and lava)  
-
 ## What is a cellular automata?
 
 A cellular automaton (CA) is a discrete mathematical model that consists of a grid of cells, each of which can be in one of a finite number of states. The cells evolve over discrete time steps based on a set of predefined rules that determine the state of each cell in the next iteration. The rules typically depend on the current state of a cell and its neighboring cells.
