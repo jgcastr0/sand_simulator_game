@@ -26,7 +26,7 @@ clock = pygame.time.Clock()
 class TheGrid:
 
     def __init__(self):
-        self.grid = np.zeros((int(width / particle_size), int(height / particle_size)))    # Creates the grid based on the particle size
+        self.grid = np.zeros((int((width / particle_size) + 2), int(height / particle_size)))    # Creates the grid based on the particle size
         
         # particles positions
         self.sand_positions = [] 
@@ -44,30 +44,27 @@ class TheGrid:
     def sand(self, mouseX, mouseY): # Adds sand particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
 
-        if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
-            if self.grid[gridX][gridY] == 0:
-                self.grid[gridX][gridY] = 1
-                for _ in range(particle_number):
-                    self.sand_positions.append([gridX * particle_size, gridY * particle_size])
+        if self.grid[gridX][gridY] == 0:
+            self.grid[gridX][gridY] = 1
+            for _ in range(particle_number):
+                self.sand_positions.append([gridX * particle_size, gridY * particle_size])
                 
     
     def water(self, mouseX, mouseY): # Adds water particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
 
-        if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
-            if self.grid[gridX][gridY] == 0:
-                self.grid[gridX][gridY] = 2
-                for _ in range(particle_number):
-                    self.water_positions.append([gridX * particle_size, gridY * particle_size])
+        if self.grid[gridX][gridY] == 0:
+            self.grid[gridX][gridY] = 2
+            for _ in range(particle_number):
+                self.water_positions.append([gridX * particle_size, gridY * particle_size])
                 
 
     def wall(self, mouseX, mouseY): # Adds a solid wall particle particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
-
-        if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
-            if self.grid[gridX][gridY] == 0:
-                self.grid[gridX][gridY] = 3
-                self.wall_positions.append([gridX * particle_size, gridY * particle_size])
+        
+        if self.grid[gridX][gridY] == 0:
+            self.grid[gridX][gridY] = 3
+            self.wall_positions.append([gridX * particle_size, gridY * particle_size])
 
 
     def create(self, screen):    # Draws the particles
@@ -96,7 +93,7 @@ class TheGrid:
                     particle[:] = [x, y + particle_size]
 
                 # Checks if both lower diagonals are free and chooses one to slide down
-                elif gridX < self.grid.shape[0] - 1 and self.grid[gridX + 1][gridY + 1] == 0 and self.grid[gridX - 1][gridY + 1] == 0:
+                elif gridX < self.grid.shape[0] - 1 and  self.grid[gridX + 1][gridY + 1] == 0 and self.grid[gridX - 1][gridY + 1] == 0:
                     direction = choice([1, -1])
                     self.grid[gridX][gridY] = 0
                     self.grid[gridX + direction][gridY + 1] = 1
@@ -165,7 +162,7 @@ def main(start_time, elapsed_time):
         xm, ym = pygame.mouse.get_pos()
 
         # Shows some informations
-        pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions) + len(universe.water_positions)}  |  Mouse posX: [{xm}]  Mouse posY: [{ym}]")
+        pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions) + len(universe.water_positions)}")
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
