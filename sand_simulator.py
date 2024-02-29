@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from random import choice, randint
+from random import choice
 from time import time
 
 
@@ -11,28 +11,34 @@ pygame.init()
 start_time = time()
 elapsed_time = 0
 
-# Screen settings
+# Particles settings
 particle_size = 5  # Change this value to play with the particles size
+particle_number = 10 # Number of particles added by each iteration
+
+# Screen settings
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
 
-# Colors
-BACKGROUND_COLOR:tuple = (0, 0, 0)
-SAND_COLOR:tuple = (197, 175, 128)
-WATER_COLOR:tuple = (77, 200, 253)
-WALL_COLOR:tuple = (155, 155, 155)
-TEXT_COLOR:tuple = (255, 255, 255)
-
 # Clock object to control FPS rate
 clock = pygame.time.Clock()
+
 
 class TheGrid:
 
     def __init__(self):
         self.grid = np.zeros((int(width / particle_size), int(height / particle_size)))    # Creates the grid based on the particle size
-        self.sand_positions = [] # particles positions
+        
+        # particles positions
+        self.sand_positions = [] 
         self.water_positions = []
         self.wall_positions = []
+        
+        # Colors
+        self.BACKGROUND_COLOR:tuple = (0, 0, 0)
+        self.SAND_COLOR:tuple = (197, 175, 128)
+        self.WATER_COLOR:tuple = (77, 200, 253)
+        self.WALL_COLOR:tuple = (155, 155, 155)
+        self.TEXT_COLOR:tuple = (255, 255, 255)
 
 
     def sand(self, mouseX, mouseY): # Adds sand particles
@@ -41,8 +47,9 @@ class TheGrid:
         if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
             if self.grid[gridX][gridY] == 0:
                 self.grid[gridX][gridY] = 1
-                self.sand_positions.append([gridX * particle_size, gridY * particle_size])
-
+                for _ in range(particle_number):
+                    self.sand_positions.append([gridX * particle_size, gridY * particle_size])
+                
     
     def water(self, mouseX, mouseY): # Adds water particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
@@ -50,8 +57,9 @@ class TheGrid:
         if gridX >= 0 and gridX < self.grid.shape[0] and gridY >= 0 and gridY < self.grid.shape[1]:
             if self.grid[gridX][gridY] == 0:
                 self.grid[gridX][gridY] = 2
-                self.water_positions.append([gridX * particle_size, gridY * particle_size])
-
+                for _ in range(particle_number):
+                    self.water_positions.append([gridX * particle_size, gridY * particle_size])
+                
 
     def wall(self, mouseX, mouseY): # Adds a solid wall particle particles
         gridX, gridY = int(mouseX / particle_size), int(mouseY / particle_size)
@@ -64,13 +72,13 @@ class TheGrid:
 
     def create(self, screen):    # Draws the particles
         for particles in self.sand_positions:
-            pygame.draw.rect(screen, SAND_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
+            pygame.draw.rect(screen, self.SAND_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
         
         for particles in self.water_positions:
-            pygame.draw.rect(screen, WATER_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
+            pygame.draw.rect(screen, self.WATER_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
 
         for particles in self.wall_positions:
-            pygame.draw.rect(screen, WALL_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
+            pygame.draw.rect(screen, self.WALL_COLOR, (particles[0], particles[1], particle_size, particle_size), 0)
 
 
     def update_sand_positions(self): # Updates the position of sand particles
@@ -141,9 +149,9 @@ class TheGrid:
                     particle[:] = [x - particle_size, y]
 
 
-    def display_text(text): # Shows instrutions on screen
+    def display_text(self, text): # Shows instrutions on screen
         font = pygame.font.Font(None, 27)
-        text1 = font.render(text, True, TEXT_COLOR)
+        text1 = font.render(text, True, self.TEXT_COLOR)
         text_rect = text1.get_rect(center = (width // 2, 15))
         screen.blit(text1, text_rect)
 
@@ -180,11 +188,11 @@ def main(start_time, elapsed_time):
                 
 
         # Fill the screen with a color
-        screen.fill(BACKGROUND_COLOR)
+        screen.fill(universe.BACKGROUND_COLOR)
 
         # Shows instructions
         if elapsed_time < 10:
-            TheGrid.display_text("Particles options:     1 = Sand    2 = Water   3 = Wall")
+            universe.display_text("Particles options:     1 = Sand    2 = Water   3 = Wall")
             elapsed_time = time() - start_time
 
         # Updates Particle Positions
