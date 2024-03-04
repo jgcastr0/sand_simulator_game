@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 from random import choice
 from time import time
-
+import threading
 
 # Initializing Pygame
 pygame.init()
@@ -13,7 +13,7 @@ elapsed_time = 0
 
 # Particles settings
 particle_size = 5  # Change this value to play with the particles size
-particle_number = 10 # Number of particles added by each iteration
+particle_number = 20 # Number of particles added by each iteration
 
 # Screen settings
 width, height = 1000, 600
@@ -111,7 +111,6 @@ class TheGrid:
                     self.grid[gridX - 1][gridY + 1] = 1
                     particle[:] = [x - particle_size, y + particle_size]
 
-
     def update_water_positions(self): # Updates the position of water particles
         for particle in self.water_positions:
             x, y = particle
@@ -159,6 +158,8 @@ def main(start_time, elapsed_time):
     # Main loop
     while True:
 
+        start2 = time()
+
         xm, ym = pygame.mouse.get_pos()
 
         # Shows some informations
@@ -191,7 +192,7 @@ def main(start_time, elapsed_time):
         if elapsed_time < 10:
             universe.display_text("Particles options:     1 = Sand    2 = Water   3 = Wall")
             elapsed_time = time() - start_time
-
+        
         # Updates Particle Positions
         universe.update_sand_positions()
         universe.update_water_positions()
@@ -203,7 +204,10 @@ def main(start_time, elapsed_time):
         pygame.display.flip()
         
         # FPS rate
-        clock.tick(120) 
+        clock.tick(120)
+
+        end2 = time()
+        print(end2 - start2)
 
 
 if __name__ == '__main__':
