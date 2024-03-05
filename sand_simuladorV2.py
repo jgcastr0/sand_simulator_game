@@ -14,17 +14,17 @@ screen = pygame.display.set_mode((width, height))
 
 # Clock object to control FPS rate
 clock = pygame.time.Clock()
-fps = 12000
+fps = 120
 
 class TheGrid:
 
     def __init__(self):
 
         # Particles settings
-        self.particle_size = 5  # Change this value to play with the particles size
+        self.particle_size = 3  # Change this value to play with the particles size
 
         # Creates the grid based on the particle size
-        self.grid = np.zeros((int((width / self.particle_size) + 1), int(height / self.particle_size)))
+        self.grid = np.zeros((int((width / self.particle_size) + 2), int(height / self.particle_size)))
         
         # Colors
         self.BACKGROUND_COLOR:tuple = (0, 0, 0)
