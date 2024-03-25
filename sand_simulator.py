@@ -2,7 +2,6 @@ import pygame
 import numpy as np
 from random import choice
 from time import time
-import threading
 
 # Initializing Pygame
 pygame.init()
@@ -13,10 +12,10 @@ elapsed_time = 0
 
 # Particles settings
 particle_size = 5  # Change this value to play with the particles size
-particle_number = 20 # Number of particles added by each iteration
+particle_number = 10 # Number of particles added by each iteration
 
 # Screen settings
-width, height = 1000, 600
+width, height = 600, 600
 screen = pygame.display.set_mode((width, height))
 
 # Clock object to control FPS rate
@@ -159,8 +158,6 @@ def main(start_time, elapsed_time):
     while True:
 
         start2 = time()
-
-        xm, ym = pygame.mouse.get_pos()
 
         # Shows some informations
         pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions) + len(universe.water_positions)}")

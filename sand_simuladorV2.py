@@ -9,7 +9,7 @@ pygame.init()
 
 
 # Screen settings
-width, height = 1100, 600
+width, height = 700, 600
 screen = pygame.display.set_mode((width, height))
 
 # Clock object to control FPS rate
@@ -21,6 +21,7 @@ class TheGrid:
     def __init__(self):
 
         # Particles settings
+
         self.particle_size = 3  # Change this value to play with the particles size
 
         # Creates the grid based on the particle size
@@ -29,6 +30,8 @@ class TheGrid:
         # Colors
         self.BACKGROUND_COLOR:tuple = (0, 0, 0)
         self.SAND_COLOR:tuple = (197, 175, 128)
+        self.WATER_COLOR:tuple = (0, 0, 0)
+        self.WALL_COLOR:tuple = (0, 0, 0)
 
 
     def sand(self, x, y): # Adds sand particles
@@ -46,20 +49,20 @@ class TheGrid:
         
         # Define the colors for each type of particle
         color_array[self.grid == 1] = self.SAND_COLOR
-        #color_array[self.grid == 2] = self.WATER_COLOR
-        #color_array[self.grid == 2] = self.WALL_COLOR
+        color_array[self.grid == 2] = self.WATER_COLOR
+        color_array[self.grid == 3] = self.WALL_COLOR
 
-        # Cria uma superfície a partir do array de cores
+        # makes a surface from color array
         surface = pygame.surfarray.make_surface(color_array)
 
-        # Redimensiona a superfície para o tamanho da tela
+        # scales the surface to screen dimesions
         surface = pygame.transform.scale(surface, (width, height))
 
-        # Desenha a superfície na tela
+        # draws the surface on the screen
         screen.blit(surface, (0, 0))
 
 
-    def update_sand_positions(self, array): # Updates the position of sand particles      
+    def update_sand_positions(self, array): # Updates the position of sand particles (Still trying to find a good way to do this...)
         
         # Checks if it can move downwards
         down = (array[:, :-1] == 1) & (array[:, 1:] == 0)
@@ -67,18 +70,11 @@ class TheGrid:
         array[:, :-1][down] = 0
         array[:, 1:][down] = 1
 
-        # Checks if the lower right diagonal is free and slides down to it
-        """right_diagonal = (array[:-1, :-1] == 1) & (array[1:, 1:] == 0)
+        # Checks if both diagonals are free and choses one to slide to (for now they only go to the right :p)
+        right_diagonal = (array[:-1, :-1] == 1) & (array[1:, 1:] == 0)
         
         array[:-1, :-1][right_diagonal] = 0
-        array[1:, 1:][right_diagonal] = 1"""
-
-        # Checks if the lower left diagonal is free and slides down to it
-        left_diagonal = (array[1:, 1:] == 1) & (array[1:, :-1] == 0)
-        
-        array[:-1, 1:][left_diagonal] = 0
-        array[1:, :-1][left_diagonal] = 1
-
+        array[1:, 1:][right_diagonal] = 1
 
         
 def main():
@@ -124,4 +120,5 @@ def main():
 
 if __name__ == '__main__':
     universe = TheGrid()
-    main()
+    while True:
+        main()
