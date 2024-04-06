@@ -12,7 +12,7 @@ elapsed_time = 0
 
 # Particles settings
 particle_size = 5  # Change this value to play with the particles size
-particle_number = 10 # Number of particles added by each iteration
+particle_number = 15 # Number of particles added by each iteration
 
 # Screen settings
 width, height = 600, 600
@@ -20,6 +20,7 @@ screen = pygame.display.set_mode((width, height))
 
 # Clock object to control FPS rate
 clock = pygame.time.Clock()
+fps = 60
 
 
 class TheGrid:
@@ -157,7 +158,7 @@ def main(start_time, elapsed_time):
     # Main loop
     while True:
 
-        start2 = time()
+        #start2 = time()
 
         # Shows some informations
         pygame.display.set_caption(f"sand Simulator  |  FPS: {int(clock.get_fps())}  |  Number of Particles: {len(universe.sand_positions) + len(universe.water_positions)}")
@@ -201,10 +202,10 @@ def main(start_time, elapsed_time):
         pygame.display.flip()
         
         # FPS rate
-        clock.tick(120)
+        clock.tick(fps)
 
-        end2 = time()
-        print(end2 - start2)
+        #end2 = time()
+        #print(end2 - start2)
 
 
 if __name__ == '__main__':

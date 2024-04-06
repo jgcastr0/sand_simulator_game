@@ -22,7 +22,7 @@ class TheGrid:
 
         # Particles settings
 
-        self.particle_size = 3  # Change this value to play with the particles size
+        self.particle_size = 2  # Change this value to play with the particles size
 
         # Creates the grid based on the particle size
         self.grid = np.zeros((int((width / self.particle_size) + 2), int(height / self.particle_size)))
@@ -82,7 +82,7 @@ def main():
     # Main loop
     while True:
 
-        start2 = time()
+        #start2 = time()
 
         # Shows some informations
         pygame.display.set_caption(f"Sand Simulator |  FPS: {int(clock.get_fps())}  |   Particulas: {np.count_nonzero(universe.grid == 1)}")
@@ -114,8 +114,8 @@ def main():
         # FPS rate
         clock.tick(fps)
 
-        end2 = time()
-        print(end2 - start2)
+        #end2 = time()
+        #print(end2 - start2)
 
 
 if __name__ == '__main__':
