@@ -12,10 +12,10 @@ elapsed_time = 0
 
 # Particles settings
 particle_size = 5  # Change this value to play with the particles size
-particle_number = 15 # Number of particles added by each iteration
+particle_number = 10 # Number of particles added by each iteration
 
 # Screen settings
-width, height = 600, 600
+width, height = 540, 850
 screen = pygame.display.set_mode((width, height))
 
 # Clock object to control FPS rate
@@ -110,6 +110,7 @@ class TheGrid:
                     self.grid[gridX][gridY] = 0
                     self.grid[gridX - 1][gridY + 1] = 1
                     particle[:] = [x - particle_size, y + particle_size]
+
 
     def update_water_positions(self): # Updates the position of water particles
         for particle in self.water_positions:
